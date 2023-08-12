@@ -36,7 +36,7 @@ export default{
       },
 
       isNumericChar(c) { 
-        return /\d/.test(c)
+        return /\d/.test(c) || c==='-'
       },
 
       parenthesisDivision(msg){
@@ -67,7 +67,15 @@ export default{
       parseEq(m){
         let msg = m
         
-        let isPrevNum = this.isNumericChar(msg[0]) || msg[0] === '-'
+        let isPrevNum = this.isNumericChar(msg[0]) || msg[0] === '−'
+        let c = 0
+        while (msg[0]==='−' || msg[0]==='-'){
+          msg = msg.substring(1)
+          c+=1
+        }
+        if (c%2 === 1){
+          msg = '-'+msg
+        }
         let parsedEq = []
         if (isPrevNum){
           parsedEq.push(msg[0])
@@ -103,11 +111,7 @@ export default{
                 i -= 2
                 len = msg.length
                 break
-            }
-            
-            
-            
-          
+            } 
         }
         len = msg.length
         for (let i = 0; i<len; i++){
@@ -118,37 +122,39 @@ export default{
                 i -= 2
                 len = msg.length
                 break
-              case '-':
+              case '−':
                 msg[i-1] = parseInt(msg[i-1]) - parseInt(msg[i+1])
                 msg.splice(i,2)
                 i -= 2
                 len = msg.length
                 break
-            
-            
           }
         }
-        return msg
+        return msg[0]+''
 
       },
       solver(m){
         let msg = m
         if (msg){
+        msg = this.minusreplace(msg)
         msg = this.despacing(msg)
         }
         if(msg){
           msg = this.parenthesisDivision(msg)
         }
         if(msg){
-        return msg
-        /*msg = this.parseEq(msg)
-        return this.rightOrderOperation(msg)*/
+        msg = this.parseEq(msg)
+        this.res = this.rightOrderOperation(msg)
+        return this.res
         }
       },
       despacing(msg){
         return msg.replace(/\s/g, '');
+      },
+      minusreplace(msg){
+        return msg.replaceAll('-','−')
       }
-
+      
     }
 
 }
