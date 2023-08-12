@@ -13,7 +13,8 @@ export default{
         sn:'',
         msg:'',
         snaki:['-', '+', '/','*'],
-        res: ''
+        res: '',
+        nums :'0123456789+−*/()'
       }
     },
     methods:{
@@ -153,6 +154,9 @@ export default{
       },
       minusreplace(msg){
         return msg.replaceAll('-','−')
+      },
+      simbolInput(text){
+        this.msg+=text
       }
       
     }
@@ -166,6 +170,9 @@ export default{
     
   </div>
   <button v-on:click="equal()">equals</button>
+  <button v-for = 'n in nums' v-bind:key = 'n' v-on:click="simbolInput(n)">{{n}}</button>
+  
+
   <h1>{{ solver(msg) }}</h1>
 </template>
 
