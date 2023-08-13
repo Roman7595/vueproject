@@ -11,7 +11,7 @@ export default{
         msg:'',
         snaki:['-', '+', '/','*'],
         res: '0',
-        nums :'987654321'
+        nums :'-+/*789(456)123'
       }
     },
     methods:{
@@ -120,6 +120,7 @@ export default{
       },
       solver(m){
         let msg = m
+        
         if (msg){
         msg = this.minusreplace(msg)
         msg = this.despacing(msg)
@@ -159,21 +160,52 @@ export default{
 </script>
 
 <template>
+  <div class = 'main'>
+    <p class='res'>{{ solver(msg) }}</p>
   <div>
+    
     <input v-model="msg">
     
   </div>
-  
-  <button v-for = 'n in nums' v-bind:key = 'n' v-on:click="simbolInput(n)">{{n}}</button>
-  
-  <button v-on:click="equal()">=</button>
+  <div class = 'nums-grid'>
+  <button v-for = 'n in nums' :key = 'n' :class = '"box-" + n +"-s"' v-on:click="simbolInput(n)">{{n}}</button>
+  <button v-on:click="equal()" class = 'equal'>=</button>
+  <button key = '0' class ='box-0-s' v-on:click="simbolInput(0)">{{0}}</button>
 
-  <h1>{{ solver(msg) }}</h1>
+  </div>
+  
+
+  
+  </div>
 </template>
 
 <style>
-  .nums-grid{
-
+  #app{
+    display: flex;
+    justify-content: center;
   }
+  .box-0-s{
+    width: 310%;
+  }
+  .nums-grid{
+    display: grid;
+    width: 200px;
+    aspect-ratio:4/5;
+    grid-template-columns: auto auto auto auto;
+    grid-template-rows: auto auto auto auto auto;
+    gap: 2px;
+    
+  }
+  .equal{
+    grid-area: '=';
+  }
+  
+  input{
+    width: 192px;
+  }
+  .res{
+    display: inline-block;
+  }
+  
 
 </style>
