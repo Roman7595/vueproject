@@ -10,8 +10,8 @@ export default{
         sn:'',
         msg:'',
         snaki:['-', '+', '/','*'],
-        res: '0',
-        nums :'()/*789-456+123'
+        res: '',
+        nums :'-+/*789.456m123'
       }
     },
     methods:{
@@ -24,31 +24,31 @@ export default{
         return /\d/.test(c) || c==='-' || c==='.'
       },
 
-      parenthesisDivision(msg){
-      let stackOfIndex = []
-      let msgLen = msg.length
-        for (let i = 0; i<msgLen; i++){
-          if (msg[i] === '('){
-            stackOfIndex.push(i)
-          }else if (msg[i] === ')'){
-            const prevPos = stackOfIndex.pop()
-            if (prevPos===undefined){
-              return false 
-            }
-            const parsed = this.parseEq(msg.slice(prevPos+1,i))
-            msg = msg.slice(0,prevPos) + this.rightOrderOperation(parsed) + msg.slice(i+1,msg.length)
-            msgLen = msg.length
-            i-= prevPos+1
-          }
-        }        
-        if (stackOfIndex[0]){
-          return false
-        }
-        if (msg){
-          return msg
-        }
+      // parenthesisDivision(msg){
+      // let stackOfIndex = []
+      // let msgLen = msg.length
+      //   for (let i = 0; i<msgLen; i++){
+      //     if (msg[i] === '('){
+      //       stackOfIndex.push(i)
+      //     }else if (msg[i] === ')'){
+      //       const prevPos = stackOfIndex.pop()
+      //       if (prevPos===undefined){
+      //         return false 
+      //       }
+      //       const parsed = this.parseEq(msg.slice(prevPos+1,i))
+      //       msg = msg.slice(0,prevPos) + this.rightOrderOperation(parsed) + msg.slice(i+1,msg.length)
+      //       msgLen = msg.length
+      //       i-= prevPos+1
+      //     }
+      //   }        
+      //   if (stackOfIndex[0]){
+      //     return false
+      //   }
+      //   if (msg){
+      //     return msg
+      //   }
         
-      },
+      // },
       parseEq(m){
         let msg = m
         
@@ -115,7 +115,7 @@ export default{
                 break
           }
         }
-        return (+(msg[0]).toFixed(15))+''
+        return (+(+msg[0]).toFixed(15))+''
 
       },
       solver(m){
@@ -126,19 +126,19 @@ export default{
         msg = this.despacing(msg)
         }
         if(msg){
-          msg = this.parenthesisDivision(msg)
+          // msg = this.parenthesisDivision(msg)
           if(msg){
           msg = this.parseEq(msg) 
           msg = this.rightOrderOperation(msg)
           if(msg !== 'NaN' && msg !== 'undefined'){
             this.res = msg
           }else{
-            this.res = 0
+            this.res = ''
           }
           }
           
         }else{
-            this.res = 0
+            this.res = ''
         }
         
         return this.res
