@@ -145,7 +145,11 @@ export default{
           }
           if(msg !== 'NaN' && msg !== 'undefined'){
             this.res = msg
+          }else{
+            this.res = 0
           }
+        }else{
+            this.res = 0
         }
         
         return this.res
