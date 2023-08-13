@@ -1,9 +1,6 @@
 <script>
 
-/*good
-parseEq
-despac
-isNumericChar*/
+
 
 export default{
     data(){
@@ -13,8 +10,8 @@ export default{
         sn:'',
         msg:'',
         snaki:['-', '+', '/','*'],
-        res: '',
-        nums :'0123456789+−*/()'
+        res: '0',
+        nums :'0123456789+-*/()'
       }
     },
     methods:{
@@ -75,7 +72,7 @@ export default{
           c+=1
         }
         if (c%2 === 1){
-          msg = '-'+msg
+          msg = '-' + msg
         }
         let parsedEq = []
         if (isPrevNum){
@@ -142,12 +139,16 @@ export default{
         }
         if(msg){
           msg = this.parenthesisDivision(msg)
+          if(msg){
+          msg = this.parseEq(msg) 
+          msg = this.rightOrderOperation(msg)
+          }
+          if(msg !== 'NaN' && msg !== 'undefined'){
+            this.res = msg
+          }
         }
-        if(msg){
-        msg = this.parseEq(msg)
-        this.res = this.rightOrderOperation(msg)
+        
         return this.res
-        }
       },
       despacing(msg){
         return msg.replace(/\s/g, '');
@@ -169,11 +170,12 @@ export default{
     <input v-model="msg">
     
   </div>
-  <button v-on:click="equal()">equals</button>
-  <button v-for = 'n in nums' v-bind:key = 'n' v-on:click="simbolInput(n)">{{n}}</button>
   
+  <button v-for = 'n in nums' v-bind:key = 'n' v-on:click="simbolInput(n)">{{n}}</button>
+
+  <button v-on:click="equal()">=</button>
 
   <h1>{{ solver(msg) }}</h1>
 </template>
 
-<style ></style>
+<style></style>
