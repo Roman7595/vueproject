@@ -10,8 +10,10 @@ export default{
         sn:'',
         msg:'',
         snaki:['-', '+', '/','*'],
+
         res: '',
         nums :'-+/*789.456m123'
+
       }
     },
     methods:{
@@ -115,6 +117,7 @@ export default{
                 break
           }
         }
+
         return (+(+msg[0]).toFixed(15))+''
 
       },
@@ -186,6 +189,7 @@ export default{
   }
   .box-0-s{
     width: 300%;
+
   }
   .nums-grid{
     display: grid;
@@ -194,10 +198,10 @@ export default{
     grid-template-columns: auto auto auto auto;
     grid-template-rows: auto auto auto auto auto;
     
-    
   }
   .equal{
     height: 200%;
+
   }
   
   input{
