@@ -12,6 +12,7 @@ export default{
         snaki:['-', '+', '/','*'],
         res: '0',
         nums :'()/*789-456+123'
+
       }
     },
     methods:{
@@ -115,7 +116,9 @@ export default{
                 break
           }
         }
-        return (+(msg[0]).toFixed(15))+''
+
+
+        return (+(+msg[0]).toFixed(15))+''
 
       },
       solver(m){
@@ -186,6 +189,7 @@ export default{
   }
   .box-0-s{
     width: 300%;
+
   }
   .nums-grid{
     display: grid;
@@ -194,10 +198,10 @@ export default{
     grid-template-columns: auto auto auto auto;
     grid-template-rows: auto auto auto auto auto;
     
-    
   }
   .equal{
     height: 200%;
+
   }
   
   input{
