@@ -11,30 +11,17 @@ export default{
         msg:'',
         snaki:['-', '+', '/','*'],
         res: '0',
-        nums :'0123456789+-*/()'
+        nums :'987654321'
       }
     },
     methods:{
-      add(){
-        switch(this.sn){
-          case'+':
-            return parseInt(this.n1) + parseInt(this.n2)
-          case'-':
-            return parseInt(this.n1) - parseInt(this.n2)
-          case'*':
-            return parseInt(this.n1) * parseInt(this.n2)
-          case'/':
-            return parseInt(this.n1) / parseInt(this.n2)
-          
-        }
-        
-      },
+      
       equal(){
         this.msg = this.res
       },
 
       isNumericChar(c) { 
-        return /\d/.test(c) || c==='-'
+        return /\d/.test(c) || c==='-' || c==='.'
       },
 
       parenthesisDivision(msg){
@@ -98,13 +85,13 @@ export default{
           
             switch (msg[i]){
               case '*':
-                msg[i-1] = parseInt(msg[i-1])*parseInt(msg[i+1])
+                msg[i-1] = parseFloat(msg[i-1])*parseFloat(msg[i+1])
                 msg.splice(i,2)
                 i -= 2
                 len = msg.length
                 break
               case '/':
-                msg[i-1] = parseInt(msg[i-1])/parseInt(msg[i+1])
+                msg[i-1] = parseFloat(msg[i-1])/parseFloat(msg[i+1])
                 msg.splice(i,2)
                 i -= 2
                 len = msg.length
@@ -115,20 +102,20 @@ export default{
         for (let i = 0; i<len; i++){
             switch (msg[i]){
               case '+':
-                msg[i-1] = parseInt(msg[i-1]) + parseInt(msg[i+1])
+                msg[i-1] = parseFloat(msg[i-1]) + parseFloat(msg[i+1])
                 msg.splice(i,2)
                 i -= 2
                 len = msg.length
                 break
               case '−':
-                msg[i-1] = parseInt(msg[i-1]) - parseInt(msg[i+1])
+                msg[i-1] = parseFloat(msg[i-1]) - parseFloat(msg[i+1])
                 msg.splice(i,2)
                 i -= 2
                 len = msg.length
                 break
           }
         }
-        return msg[0]+''
+        return (+(+msg[0]).toFixed(15))+''
 
       },
       solver(m){
@@ -142,12 +129,13 @@ export default{
           if(msg){
           msg = this.parseEq(msg) 
           msg = this.rightOrderOperation(msg)
-          }
           if(msg !== 'NaN' && msg !== 'undefined'){
             this.res = msg
           }else{
             this.res = 0
           }
+          }
+          
         }else{
             this.res = 0
         }
@@ -155,7 +143,8 @@ export default{
         return this.res
       },
       despacing(msg){
-        return msg.replace(/\s/g, '');
+        return msg.replace(/\s/g, '').replace(',','.');
+
       },
       minusreplace(msg){
         return msg.replaceAll('-','−')
@@ -176,10 +165,15 @@ export default{
   </div>
   
   <button v-for = 'n in nums' v-bind:key = 'n' v-on:click="simbolInput(n)">{{n}}</button>
-
+  
   <button v-on:click="equal()">=</button>
 
   <h1>{{ solver(msg) }}</h1>
 </template>
 
-<style></style>
+<style>
+  .nums-grid{
+
+  }
+
+</style>
