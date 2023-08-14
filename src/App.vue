@@ -10,9 +10,10 @@ export default{
         sn:'',
         msg:'',
         snaki:['-', '+', '/','*'],
-
+        
         res: '',
-        nums :'-+/*789.456m123'
+        firstThreeRows :'*+/',
+        lastThreeRows:'789-456.123',
 
       }
     },
@@ -155,6 +156,9 @@ export default{
       },
       simbolInput(text){
         this.msg+=text
+      },
+      backSpaceing(){
+        this.msg = this.msg.substring(0,this.msg.length-1)
       }
       
     }
@@ -164,14 +168,16 @@ export default{
 
 <template>
   <div class = 'main'>
-    <p class='res'>{{ solver(msg) }}</p>
+    <p class='res'>{{ "Result: " + solver(msg) }}</p>
   <div>
     
     <input v-model="msg">
     
   </div>
   <div class = 'nums-grid'>
-  <button v-for = 'n in nums' :key = 'n' :class = '"box-" + n +"-s"' v-on:click="simbolInput(n)">{{n}}</button>
+  <button v-for = 'n in firstThreeRows' :key = 'n' :class = '"box-" + n +"-s"' v-on:click="simbolInput(n)">{{n}}</button>
+  <button v-on:click="backSpaceing()">←</button>
+  <button v-for = 'n in lastThreeRows' :key = 'n' :class = '"box-" + n +"-s"' v-on:click="simbolInput(n)">{{n}}</button>
   <button v-on:click="equal()" class = 'equal'>=</button>
   <button key = '0' class ='box-0-s' v-on:click="simbolInput(0)">{{0}}</button>
 
@@ -186,6 +192,10 @@ export default{
   #app{
     display: flex;
     justify-content: center;
+  }
+  .main{
+    width: 450px;
+    height: 400px;
   }
   .box-0-s{
     width: 300%;
@@ -206,8 +216,11 @@ export default{
   
   input{
     width: 192px;
+    height: 30px;
+    font-size: 24px;
   }
   .res{
+    font-size: 36px;
     display: inline-block;
   }
   
