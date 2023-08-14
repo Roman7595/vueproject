@@ -5,12 +5,7 @@
 export default{
     data(){
       return{
-        n1:'',
-        n2:'',
-        sn:'',
         msg:'',
-        snaki:['-', '+', '/','*'],
-        
         res: '',
         firstThreeRows :'*+/',
         lastThreeRows:'789-456.123',
@@ -134,9 +129,12 @@ export default{
           if(msg){
           msg = this.parseEq(msg) 
           msg = this.rightOrderOperation(msg)
-          if(msg !== 'NaN' && msg !== 'undefined'){
+          if(msg>=99999999999999999){
+            
+            this.res = "Too Much"
+          }else if(msg !== 'NaN' && msg !== 'undefined'){
             this.res = msg
-          }else{
+          } else{
             this.res = ''
           }
           }
@@ -168,61 +166,97 @@ export default{
 
 <template>
   <div class = 'main'>
-    <p class='res'>{{ "Result: " + solver(msg) }}</p>
-  <div>
-    
+    <div class='res'>{{ "Result: " + solver(msg) }}</div>
+  <div class ='calc-box'>
+    <div class = 'calc'>
     <input v-model="msg">
     
-  </div>
-  <div class = 'nums-grid'>
-  <button v-for = 'n in firstThreeRows' :key = 'n' :class = '"box-" + n +"-s"' v-on:click="simbolInput(n)">{{n}}</button>
-  <button v-on:click="backSpaceing()">←</button>
-  <button v-for = 'n in lastThreeRows' :key = 'n' :class = '"box-" + n +"-s"' v-on:click="simbolInput(n)">{{n}}</button>
-  <button v-on:click="equal()" class = 'equal'>=</button>
-  <button key = '0' class ='box-0-s' v-on:click="simbolInput(0)">{{0}}</button>
-
-  </div>
   
+  <div class = 'nums-grid'>
+  <button v-for = 'n in firstThreeRows' :key = 'n' :class = '"box-" + n +"-s"' class ='box' v-on:click="simbolInput(n)">{{n}}</button>
+  <button v-on:click="backSpaceing()" class ='box'>←</button>
+  <button v-for = 'n in lastThreeRows' :key = 'n' :class = '"box-" + n +"-s"' class ='box' v-on:click="simbolInput(n)">{{n}}</button>
+  <button v-on:click="equal()" class = 'box equal'>=</button>
+  <button key = '0' class ='box-0-s box' v-on:click="simbolInput(0)">{{0}}</button>
+  </div>
+  </div>
+  </div>
 
   
   </div>
 </template>
 
 <style>
+.res{
+  border: 1px solid #000;
+  margin: 20px;
+  width: 100%;
+}
+  .calc{
+    padding: 20px;
+    background-color: #F3F3F3;
+  }
+
   #app{
     display: flex;
     justify-content: center;
   }
   .main{
-    width: 450px;
-    height: 400px;
+    width: 600px;
+    height: 430px;
   }
-  .box-0-s{
-    width: 300%;
+  
+  .calc-box{
+    display: flex;
+    justify-content: center;
+  }
 
-  }
   .nums-grid{
     display: grid;
     width: 200px;
     aspect-ratio:4/5;
     grid-template-columns: auto auto auto auto;
     grid-template-rows: auto auto auto auto auto;
-    
+    gap: 5px;
   }
-  .equal{
-    height: 200%;
-
-  }
+  
   
   input{
     width: 192px;
     height: 30px;
     font-size: 24px;
+    margin-bottom: 10px;
   }
   .res{
     font-size: 36px;
     display: inline-block;
   }
-  
+  .box{
+    background-color: #fff;
+    border-radius: 4px;
+    font-size: 20px;
+    width: 46px;
+    border: 1px solid #E5E5E5;
+    color: #1A1A1A;
+  }
+  .box-0-s{
+    width: 324%;
 
+  }
+  button:hover{
+    background-color: #FCFCFC;
+  }
+  button:active {
+    color: #5D5D5D;
+    background-color: #F4F4F4;
+  }
+  .equal{
+    height: 211%;
+    background-color: #005A9E;
+    color: #fff;
+  }   
+  .equal:hover{
+    background-color: #196AA7;
+
+  }
 </style>
