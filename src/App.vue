@@ -1,5 +1,5 @@
 <script>
-
+// fix:double simb
 
 
 export default{
@@ -80,7 +80,9 @@ export default{
         let msg = m
         let len = msg.length
         for (let i = 0; i<len; i++){
-          
+            if (!this.isNumericChar(msg[i][0]) && msg[i].length>1){
+              return ''
+            }
             switch (msg[i]){
               case '*':
                 msg[i-1] = parseFloat(msg[i-1])*parseFloat(msg[i+1])
